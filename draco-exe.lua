@@ -3,12 +3,22 @@
 -- Main executable for Draco
 -- Coded by Hector Escobedo
 
-require "draco"
+local draco = require "draco"
+local lgi = require "lgi"
+local Gtk = lgi.Gtk
 
-dragon = draco.gendragon() 			-- Constructor for the table of attributes for the player's dragon
+local dragon = draco.gendragon() 			-- Constructor for the table of attributes for the player's dragon
 
 dragon.name = "Neirada"
 
-idprint = dragon.name .. " is a " .. dragon.sex .. " " .. dragon.breathtype .. " dragon."
+local idprint = dragon.name .. " is a " .. dragon.sex .. " " .. dragon.breathtype .. " dragon."
 
 print(idprint)
+
+local topwindow = Gtk.Window()
+topwindow.title = "Draco"
+function topwindow:on_destroy ()
+   Gtk.main_quit()
+end
+topwindow:show_all()
+Gtk.main()

@@ -11,6 +11,12 @@ local breathtable = {
    [3] = "acid",
 }
 
+local clawtable = {
+   [1] = 3,
+   [2] = 4,
+   [3] = 5,
+}
+
 local colortable = {
    [1] = "red",
    [2] = "orange",
@@ -83,6 +89,7 @@ local function gendragon (opt)
       breathtype = opt.breathtype or randselect(breathtable),
       sex = opt.sex or randselect(sextable),
       colorscheme = gencolorscheme(opt.colorscheme),
+      claws = opt.claws or randselect(clawtable),
    }
    return attr
 end
@@ -99,3 +106,5 @@ if _REQUIREDNAME == nil then
 else
    _G[_REQUIREDNAME] = P
 end
+
+return draco

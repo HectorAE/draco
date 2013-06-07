@@ -11,21 +11,57 @@ local breathtable = {
    [3] = "acid",
 }
 
-local function randbreathtype ()
-   math.randomseed(os.time())	-- Kludgy but workable
-   local int = math.random(# breathtable) -- 1 to length of table
-   return breathtable[int]
-end
+local colortable = {
+   [1] = "red",
+   [2] = "orange",
+   [3] = "yellow",
+   [4] = "green",
+   [5] = "blue",
+   [6] = "indigo",
+   [7] = "violet",
+   [8] = "brown",
+   [9] = "black",
+   [10] = "white",
+   [11] = "grey",
+}
+
+local patterntable = {
+   [1] = "solid",
+   [2] = "mottled",
+   [3] = "striped",
+}
 
 local sextable = {		-- Rather silly but useful
    [1] = "female",
    [2] = "male",
 }
 
-local function randsex ()
+local function randselect (index)
    math.randomseed(os.time())
-   local int = math.random(# sextable)
-   return sextable[int]
+   local int = math.random(# index)
+   return index[int]
+end
+
+-- Function that creates a "colorscheme table".
+local function gencolorscheme (opt)
+   if opt == nil then
+      opt = {}			-- Still in local function, safe
+   end
+   local pattern = opt.pattern or randselect(patterntable)
+   if pattern == "solid" then
+      return {
+	 pattern = pattern,
+	 maincolor = opt.maincolor or randselect(colortable),
+	     }
+   elseif pattern == "mottled" or "striped" then
+      return {
+	 pattern = pattern,
+	 maincolor = opt.maincolor or randselect(colortable),
+	 featurecolor = opt.featurecolor or randselect(colortable),
+	     }
+   else
+      error("invalid pattern string", 3) -- Point at gendragon caller
+   end
 end
 
 -- Function that checks a dragon's attributes are all good with
@@ -38,14 +74,15 @@ end
 -- Takes a single indexed table (opt) with optional parameters for
 -- generation. All missing params (== nil) are randomized. This is
 -- one instance where or shortcut eval is very useful. Returns the
--- final attribute table.
+-- final attribute table for initializing a dragon object.
 local function gendragon (opt)
    if opt == nil then
       opt = {}			-- Still in local function, safe
    end
    local attr = {
-      breathtype = opt.breathtype or randbreathtype(),
-      sex = opt.sex or randsex(),
+      breathtype = opt.breathtype or randselect(breathtable),
+      sex = opt.sex or randselect(sextable),
+      colorscheme = gencolorscheme(opt.colorscheme),
    }
    return attr
 end

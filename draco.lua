@@ -106,5 +106,3 @@ if _REQUIREDNAME == nil then
 else
    _G[_REQUIREDNAME] = P
 end
-
-return draco

@@ -3,7 +3,7 @@
 -- Main executable for Draco
 -- Coded by Hector Escobedo
 
-local draco = require "draco"
+require "draco"
 local lgi = require "lgi"
 local Gtk = lgi.Gtk
 
@@ -13,11 +13,11 @@ dragon.name = "Neirada"
 
 local idprint = dragon.name .. " is a " .. dragon.sex .. " " .. dragon.breathtype .. " dragon."
 
-print(idprint)
+-- print(idprint)
 
 local topwindow = Gtk.Window()
 topwindow.title = "Draco"
-function topwindow:on_destroy ()
+function topwindow.on_destroy ()
    Gtk.main_quit()
 end
 

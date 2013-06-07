@@ -1,14 +1,14 @@
 #! /usr/bin/env lua
 
--- Main module for Draco
+-- Main executable for Draco
 -- Coded by Hector Escobedo
 
-dragon = {} 			-- Constructor for the table of attributes for the player's dragon
+require "draco"
 
-dragon["name"] = "Neirada"
-dragon["sex"] = "female"
-dragon["type"] = "fire"
+dragon = draco.gendragon() 			-- Constructor for the table of attributes for the player's dragon
 
-idprint = dragon["name"] .. " is a " .. dragon["sex"] .. " " .. dragon["type"] .. " dragon."
+dragon.name = "Neirada"
+
+idprint = dragon.name .. " is a " .. dragon.sex .. " " .. dragon.breathtype .. " dragon."
 
 print(idprint)

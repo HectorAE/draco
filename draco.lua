@@ -44,8 +44,8 @@ local function gendragon (opt)
       opt = {}			-- Still in local function, safe
    end
    local attr = {
-      ["breathtype"] = opt.breathtype or randbreathtype(),
-      ["sex"] = opt.sex or randsex(),
+      breathtype = opt.breathtype or randbreathtype(),
+      sex = opt.sex or randsex(),
    }
    return attr
 end

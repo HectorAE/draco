@@ -20,5 +20,10 @@ topwindow.title = "Draco"
 function topwindow:on_destroy ()
    Gtk.main_quit()
 end
+
+local idlabel = Gtk.Label({label = idprint})
+
+topwindow:add(idlabel)
 topwindow:show_all()
+
 Gtk.main()

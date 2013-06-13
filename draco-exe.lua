@@ -7,7 +7,9 @@ require "draco"
 local lgi = require "lgi"
 local Gtk = lgi.Gtk
 
-local dragon = draco.gendragon() 			-- Constructor for the table of attributes for the player's dragon
+draco.getdata()
+
+local dragon = draco.gendragon()	-- Constructor for the table of attributes for the player's dragon
 
 dragon.name = "Neirada"
 

@@ -5,42 +5,12 @@
 -- entropy is found. All random parameters are identical during the
 -- same second!
 
-local breathtable = {
-   [1] = "fire",
-   [2] = "ice",
-   [3] = "acid",
-}
-
-local clawtable = {
-   [1] = 3,
-   [2] = 4,
-   [3] = 5,
-}
-
-local colortable = {
-   [1] = "red",
-   [2] = "orange",
-   [3] = "yellow",
-   [4] = "green",
-   [5] = "blue",
-   [6] = "indigo",
-   [7] = "violet",
-   [8] = "brown",
-   [9] = "black",
-   [10] = "white",
-   [11] = "grey",
-}
-
-local patterntable = {
-   [1] = "solid",
-   [2] = "mottled",
-   [3] = "striped",
-}
-
-local sextable = {		-- Rather silly but useful
-   [1] = "female",
-   [2] = "male",
-}
+local function getdata (file)	-- Loads data tables
+   if file == nil then
+      file = "./draco-data.lua"			-- Still in local function, safe
+   end
+   dofile(file)
+end
 
 local function randselect (index)
    math.randomseed(os.time())
@@ -96,6 +66,7 @@ end
 
 local P = {			-- Our package table to export
    gendragon = gendragon,	-- Pub name = local name
+   getdata = getdata,
 }
 
 -- Dynamic package name allocation for requires

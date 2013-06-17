@@ -5,6 +5,6 @@ draco_irr_SOURCES = irr-exe.cpp
 
 # Bit kludgy, but eh
 AM_CXXFLAGS = -I$(includedir)/irrlicht/
-AM_LDFLAGS =  -lIrrlicht
+AM_LDFLAGS =  -lIrrlicht -llua5.1 -lluabind
 
 doc_DATA = README.md

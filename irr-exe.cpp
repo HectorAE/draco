@@ -1,3 +1,4 @@
+#include <iostream>
 #include <irrlicht.h>
 
 extern "C" {
@@ -18,48 +19,32 @@ using namespace gui;
 
 // using namespace luabind;
 
-int main() {
-  // // Start the Irrlicht engine
-  // IrrlichtDevice *device =
-  //   createDevice( video::EDT_OPENGL, dimension2d<u32>(200, 350), 16,
-  // 		  false, false, false, 0);
-  // if (!device)
-  //   return 1;
+void stringout(const char* instr) {
+  std::cout << instr << std::endl;
+}
 
+int main() {
   // Create our global Lua state
   lua_State *L = luaL_newstate();
 
   // Connect it to luabind
   luabind::open(L);
 
-  // // device->setWindowCaption(L"Draco");
-  // IVideoDriver* driver = device->getVideoDriver();
-  // ISceneManager* smgr = device->getSceneManager();
-  // IGUIEnvironment* guienv = device->getGUIEnvironment();
-
-  // guienv->addStaticText(L"This is Draco, a label.",
-  // 			rect<s32>(10,10,240,24), true);
-
-  // while(device->run())
-  //   {
-  //     driver->beginScene(true, true, SColor(244,100,101,130));
-  //     smgr->drawAll();
-  //     guienv->drawAll();
-  //     driver->endScene();
-  //   }
-
   // Bind the engine to the Lua state's global scope
   luabind::module(L) [
-		      // luabind::class_<IrrlichtDevice>("IrrlichtDevice")
-		      luabind::def("createDevice", createDevice)
-		      // luabind::def("E_DRIVER_TYPE", E_DRIVER_TYPE)
-		      // luabind::def("dimension2d", dimension2d)
+		      luabind::def("createDevice", createDevice),
+		      luabind::class_<dimension2d <u32> >("dimension2d"),
+		      luabind::def("cout", stringout)
 		      ];
 
-  // Run the main Lua file
   luaL_dostring(
-		L, "dofile('./draco-exe.lua')"
+		L, "cout('Draco started.')"
 		);
+
+  // Run the main Lua file
+  // luaL_dostring(
+  // 		L, "dofile('./draco-exe.lua')"
+  // 		);
 
   // device->drop();
 

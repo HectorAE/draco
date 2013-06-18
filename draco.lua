@@ -7,7 +7,7 @@
 
 local function getdata (file)	-- Loads data tables
    if file == nil then
-      file = "./draco-data.lua"			-- Still in local function, safe
+      file = "draco_data.lua"			-- Still in local function, safe
    end
    dofile(file)
 end

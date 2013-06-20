@@ -1,0 +1,5 @@
+#! /bin/sh
+
+# Script to automatically launch Draco
+
+love /opt/draco.love

@@ -3,5 +3,5 @@ Type=Application
 Name=Draco
 Comment=Burn, fly, and grow
 Categories=Game;
-Exec=./draco-exe.lua
+Exec=draco
 Terminal=false

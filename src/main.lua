@@ -13,12 +13,34 @@ local idprint = dragon.name .. " is a " .. dragon.sex .. " " .. dragon.breathtyp
 
 -- print(idprint)
 
+local vcam = scales_ui.vcam
+
+local bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale
+
+function love.load ()
+   picdragon = love.graphics.newImage("placeholder.png")
+end
+
 function love.draw ()
+   vcam:apply()
    love.graphics.printf(idprint, 0, 400, 800, "center")
+   love.graphics.printf(bugprint, 0, 200, 800, "center")
+   love.graphics.draw(picdragon, 300, 300)
+   vcam:clear()
+end
+
+function love.keypressed (k)
+   if k == "=" then
+      vcam:zoom(.5)
+   elseif k == "-" then
+      vcam:zoom(2)
+   end
 end
 
 function love.update (tick)
    if scales_ui.ctrlk("q") then
       love.event.push("quit")
    end
+   vcam:setpos(love.mouse.getX(), love.mouse.getY())
+   bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale
 end

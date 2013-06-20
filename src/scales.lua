@@ -1,4 +1,4 @@
--- Globally accessible package that provides Draco's core functions
+-- Globally accessible package that provides Scales' core functions
 -- Coded by Hector Escobedo
 
 -- Don't try to generate dragons too fast until a better source of
@@ -66,7 +66,7 @@ local P = {			-- Our package table to export
 -- Allocates the called filename to package
 
 if _REQUIREDNAME == nil then
-   draco = P			-- Default package name
+   scales = P			-- Default package name
 else
    _G[_REQUIREDNAME] = P
 end

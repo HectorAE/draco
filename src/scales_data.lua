@@ -1,4 +1,4 @@
--- Standard data package for Draco
+-- Standard data package for Scales
 -- Coded by Hector Escobedo
 
 -- Usable with dofile

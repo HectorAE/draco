@@ -1,13 +1,11 @@
-#! /usr/bin/env lua
-
--- Main executable for Draco
+-- Main package that runs Scales
 -- Coded by Hector Escobedo
 
-require "draco"
-require "draco_ui"
-require "draco_data"
+require "scales"
+require "scales_ui"
+require "scales_data"
 
-local dragon = draco.gendragon()	-- Constructor for the table of attributes for the player's dragon
+local dragon = scales.gendragon()	-- Constructor for the table of attributes for the player's dragon
 
 dragon.name = "Neirada"
 
@@ -20,7 +18,7 @@ function love.draw ()
 end
 
 function love.update (tick)
-   if draco_ui.ctrlk("q") then
+   if scales_ui.ctrlk("q") then
       love.event.push("quit")
    end
 end

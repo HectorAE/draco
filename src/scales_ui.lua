@@ -17,7 +17,7 @@ local P = {			-- Our package table to export
 -- Allocates the called filename to package
 
 if _REQUIREDNAME == nil then
-   draco_ui = P		-- Default package name
+   scales_ui = P		-- Default package name
 else
    _G[_REQUIREDNAME] = P
 end

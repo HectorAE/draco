@@ -5,8 +5,7 @@
 
 require "draco"
 require "draco_ui"
-
-draco.getdata()
+require "draco_data"
 
 local dragon = draco.gendragon()	-- Constructor for the table of attributes for the player's dragon
 

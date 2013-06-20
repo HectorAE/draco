@@ -5,13 +5,6 @@
 -- entropy is found. All random parameters are identical during the
 -- same second!
 
-local function getdata (file)	-- Loads data tables
-   if file == nil then
-      file = "draco_data.lua"			-- Still in local function, safe
-   end
-   dofile(file)
-end
-
 local function randselect (index)
    math.randomseed(os.time())
    local int = math.random(# index)

@@ -1,5 +1,5 @@
 #! /bin/sh
 
-# Script to automatically launch Draco
+# Script to automatically launch Scales
 
-love /opt/draco.love
+love /opt/scales.love

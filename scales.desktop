@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Name=Draco
+Name=Scales
 Comment=Burn, fly, and grow
 Categories=Game;
-Exec=draco
+Exec=scales
 Terminal=false

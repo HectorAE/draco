@@ -19,6 +19,7 @@ local bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale
 
 function love.load ()
    picdragon = love.graphics.newImage("placeholder.png")
+   button = love.graphics.newImage("button.png")
 end
 
 function love.draw ()
@@ -27,6 +28,8 @@ function love.draw ()
    love.graphics.printf(bugprint, 0, 200, 800, "center")
    love.graphics.draw(picdragon, 300, 300)
    vcam:clear()
+
+   love.graphics.draw(button, 0, 0)
 end
 
 function love.keypressed (k)
@@ -44,7 +47,6 @@ function love.keypressed (k)
 end
 
 function love.update (tick)
-   vcam:setpos(love.mouse.getX() - ((love.graphics.getWidth() / 2) * vcam.scale),
-	       love.mouse.getY() - ((love.graphics.getHeight() / 2) * vcam.scale))
+   vcam:setpos(vcam:posadjust(love.mouse.getX(), love.mouse.getY()))
    bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale
 end

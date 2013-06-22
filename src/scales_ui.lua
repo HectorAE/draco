@@ -2,6 +2,8 @@
 -- Coded by Hector Escobedo
 
 -- Virtual camera object which controls the view
+-- Anything drawn between the apply and clear functions is transformed
+-- by the virtual camera. Anything drawn outside stays absolute.
 local vcam = {}
 vcam.x = 0
 vcam.y = 0
@@ -24,6 +26,13 @@ end
 function vcam:setpos (px, py)
    self.x = px or self.x
    self.y = py or self.y
+end
+
+-- Take two coordinates and center them to the window and scale
+function vcam:posadjust (px, py)
+   local realx = px - ((love.graphics.getWidth() / 2) * self.scale)
+   local realy = py - ((love.graphics.getHeight() / 2) * self.scale)
+   return realx, realy
 end
 
 function vcam:apply ()

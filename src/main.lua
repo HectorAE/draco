@@ -30,6 +30,12 @@ function love.draw ()
 end
 
 function love.keypressed (k)
+   -- Check for Ctrl commands
+   if scales_ui.ctrlk("q") then
+      love.event.push("quit")
+   end
+
+   -- All other keys, using the argument
    if k == "=" then
       vcam:zoom(.5)
    elseif k == "-" then
@@ -38,9 +44,7 @@ function love.keypressed (k)
 end
 
 function love.update (tick)
-   if scales_ui.ctrlk("q") then
-      love.event.push("quit")
-   end
-   vcam:setpos(love.mouse.getX(), love.mouse.getY())
+   vcam:setpos(love.mouse.getX() - ((love.graphics.getWidth() / 2) * vcam.scale),
+	       love.mouse.getY() - ((love.graphics.getHeight() / 2) * vcam.scale))
    bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale
 end

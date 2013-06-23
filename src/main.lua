@@ -17,6 +17,8 @@ local vcam = scales_ui.vcam
 
 local bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale
 
+local mousedown = false
+
 function love.load ()
    picdragon = love.graphics.newImage("placeholder.png")
    button = love.graphics.newImage("button.png")
@@ -35,7 +37,7 @@ end
 function love.keypressed (k)
    -- Check for Ctrl commands
    if scales_ui.ctrlk("q") then
-      love.event.push("quit")
+      love.event.quit()
    end
 
    -- All other keys, using the argument
@@ -43,10 +45,22 @@ function love.keypressed (k)
       vcam:zoom(.5)
    elseif k == "-" then
       vcam:zoom(2)
+   elseif k == "f11" then
+      love.graphics.toggleFullscreen()
    end
 end
 
+function love.mousepressed()
+   mousedown = true
+end
+
+function love.mousereleased()
+   mousedown = false
+end
+
 function love.update (tick)
-   vcam:setpos(vcam:posadjust(love.mouse.getX(), love.mouse.getY()))
+   if mousedown then
+      vcam:setpos(vcam:posadjust(love.mouse.getX(), love.mouse.getY()))
+   end
    bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale
 end

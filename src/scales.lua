@@ -6,7 +6,7 @@
 -- same second!
 
 local function randselect (index)
-   math.randomseed(os.time())
+   -- math.randomseed(os.time())
    local int = math.random(# index)
    return index[int]
 end
@@ -57,9 +57,16 @@ local function gendragon (opt)
    return attr
 end
 
+-- Table that contains all in-game entities
+local topworld = {}
+
+topworld.mobs = {}
+
+-- Each level is associated with a map
+topworld.levels = {}
+
 local P = {			-- Our package table to export
    gendragon = gendragon,	-- Pub name = local name
-   getdata = getdata,
 }
 
 -- Dynamic package name allocation for requires

@@ -1,6 +1,8 @@
 -- Standard data package for Scales
 -- Coded by Hector Escobedo
 
+require "scales_taxa"
+
 local breathtable = {
    [1] = "fire",
    [2] = "ice",
@@ -44,6 +46,7 @@ local P = {			-- Our package table to export
    colortable = colortable,
    patterntable = patterntable,
    sextable = sextable,
+   species = scales_taxa.species,
 }
 
 -- Dynamic package name allocation for requires

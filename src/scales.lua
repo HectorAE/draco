@@ -14,7 +14,7 @@ end
 -- Function that creates a "colorscheme table".
 local function gencolorscheme (opt)
    if opt == nil then
-      opt = {}			-- Still in local function, safe
+      opt = {}
    end
    local pattern = opt.pattern or randselect(data.patterntable)
    if pattern == "solid" then
@@ -46,7 +46,7 @@ end
 -- final attribute table for initializing a dragon object.
 local function gendragon (opt)
    if opt == nil then
-      opt = {}			-- Still in local function, safe
+      opt = {}
    end
    local attr = {
       breathtype = opt.breathtype or randselect(data.breathtable),
@@ -56,14 +56,6 @@ local function gendragon (opt)
    }
    return attr
 end
-
--- Table that contains all in-game entities
-local topworld = {}
-
-topworld.mobs = {}
-
--- Each level is associated with a map
-topworld.levels = {}
 
 local P = {			-- Our package table to export
    gendragon = gendragon,	-- Pub name = local name

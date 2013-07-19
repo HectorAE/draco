@@ -25,10 +25,11 @@ function taxon:define (parent)
       nt.rankno = 1		-- Root taxon
    else
       setmetatable(nt, {__index = parent})
-      if parent.rankno < 8 then
+      if parent.rankno < table.getn(trt) then
 	 nt.rankno = parent.rankno + 1
       else
-	 error("tried to define a subspecies taxon", 2) -- Not me! Them!
+	 error("tried to define a sub-" .. trt[table.getn(trt)] ..
+	       " taxon", 2) -- Not me! Them!
       end
    end
 
@@ -112,8 +113,6 @@ local species = {
    pan_troglodytes = pan_troglodytes,
    canis_lupus = canis_lupus,
 }
-
--- for 
 
 local P = {			-- Our package table to export
    species = species,		-- Pub name = local name

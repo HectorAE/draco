@@ -25,10 +25,10 @@ function taxon:define (parent)
       nt.rankno = 1		-- Root taxon
    else
       setmetatable(nt, {__index = parent})
-      if parent.rankno < table.getn(trt) then
+      if parent.rankno < #trt then
 	 nt.rankno = parent.rankno + 1
       else
-	 error("tried to define a sub-" .. trt[table.getn(trt)] ..
+	 error("tried to define a sub-" .. trt[#trt] ..
 	       " taxon", 2) -- Not me! Them!
       end
    end

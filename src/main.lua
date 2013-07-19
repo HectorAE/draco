@@ -4,6 +4,10 @@
 require "scales"
 require "scales_ui"
 require "scales_data"
+require "scales_mapper"
+
+local world = scales_mapper.world
+local mapdraw = scales_mapper.mapdraw
 
 data = scales_data
 
@@ -21,13 +25,18 @@ local bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale
 
 local mousedown = false
 
+local tiles = {}
+
 function love.load ()
-   picdragon = love.graphics.newImage("placeholder.png")
-   button = love.graphics.newImage("button.png")
+   picdragon = love.graphics.newImage("img/placeholder.png")
+   button = love.graphics.newImage("img/button.png")
+   scales_mapper.loadtiles("img/tiles", world.tileindex, love.graphics.newImage, tiles)
 end
 
 function love.draw ()
    vcam:apply()
+   mapdraw(world.levels[1], tiles, 32, love.graphics.draw)
+
    love.graphics.printf(idprint, 0, 400, 800, "center")
    love.graphics.printf(bugprint, 0, 200, 800, "center")
    love.graphics.draw(picdragon, 300, 300)
@@ -47,6 +56,14 @@ function love.keypressed (k)
       vcam:zoom(.5)
    elseif k == "-" then
       vcam:zoom(2)
+   elseif k == "up" and world.levels[1].y > 0 then
+      world.levels[1].y = world.levels[1].y - 1
+   elseif k == "down" and world.levels[1].y < #world.levels[1] then
+      world.levels[1].y = world.levels[1].y + 1
+   elseif k == "left" and world.levels[1].x > 0 then
+      world.levels[1].x = world.levels[1].x - 1
+   elseif k == "right" and world.levels[1].x < #world.levels[1][1] then
+      world.levels[1].x = world.levels[1].x + 1
    elseif k == "f11" then
       love.graphics.toggleFullscreen()
    end

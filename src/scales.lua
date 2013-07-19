@@ -6,7 +6,7 @@
 -- same second!
 
 local function randselect (index)
-   -- math.randomseed(os.time())
+   math.randomseed(os.time())
    local int = math.random(# index)
    return index[int]
 end
@@ -16,17 +16,17 @@ local function gencolorscheme (opt)
    if opt == nil then
       opt = {}			-- Still in local function, safe
    end
-   local pattern = opt.pattern or randselect(patterntable)
+   local pattern = opt.pattern or randselect(data.patterntable)
    if pattern == "solid" then
       return {
 	 pattern = pattern,
-	 maincolor = opt.maincolor or randselect(colortable),
+	 maincolor = opt.maincolor or randselect(data.colortable),
 	     }
    elseif pattern == "mottled" or "striped" then
       return {
 	 pattern = pattern,
-	 maincolor = opt.maincolor or randselect(colortable),
-	 featurecolor = opt.featurecolor or randselect(colortable),
+	 maincolor = opt.maincolor or randselect(data.colortable),
+	 featurecolor = opt.featurecolor or randselect(data.colortable),
 	     }
    else
       error("invalid pattern string", 3) -- Point at gendragon caller
@@ -49,10 +49,10 @@ local function gendragon (opt)
       opt = {}			-- Still in local function, safe
    end
    local attr = {
-      breathtype = opt.breathtype or randselect(breathtable),
-      sex = opt.sex or randselect(sextable),
+      breathtype = opt.breathtype or randselect(data.breathtable),
+      sex = opt.sex or randselect(data.sextable),
       colorscheme = gencolorscheme(opt.colorscheme),
-      claws = opt.claws or randselect(clawtable),
+      claws = opt.claws or randselect(data.clawtable),
    }
    return attr
 end

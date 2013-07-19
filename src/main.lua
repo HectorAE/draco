@@ -5,11 +5,13 @@ require "scales"
 require "scales_ui"
 require "scales_data"
 
+data = scales_data
+
 local dragon = scales.gendragon()	-- Constructor for the table of attributes for the player's dragon
 
 dragon.name = "Neirada"
 
-local idprint = dragon.name .. " is a " .. dragon.sex .. " " .. dragon.breathtype .. " dragon."
+local idprint = dragon.name .. " is a " .. dragon.colorscheme.maincolor .. " " .. dragon.sex .. " " .. dragon.breathtype .. " dragon."
 
 -- print(idprint)
 

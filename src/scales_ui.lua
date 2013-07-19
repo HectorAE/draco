@@ -37,9 +37,9 @@ end
 
 function vcam:apply ()
    love.graphics.push()
+   love.graphics.translate(-self.x, -self.y)
    love.graphics.rotate(-self.angle)
    love.graphics.scale(1 / self.scale)
-   love.graphics.translate(-self.x, -self.y)
 end
 
 function vcam:clear ()

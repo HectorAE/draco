@@ -53,9 +53,9 @@ function love.keypressed (k)
 
    -- All other keys, using the argument
    if k == "=" then
-      vcam:zoom(.5)
+      vcam:zoom(.8)
    elseif k == "-" then
-      vcam:zoom(2)
+      vcam:zoom(1.25)
    elseif k == "up" and world.levels[1].y > 0 then
       world.levels[1].y = world.levels[1].y - 1
    elseif k == "down" and world.levels[1].y < #world.levels[1] then
@@ -64,6 +64,14 @@ function love.keypressed (k)
       world.levels[1].x = world.levels[1].x - 1
    elseif k == "right" and world.levels[1].x < #world.levels[1][1] then
       world.levels[1].x = world.levels[1].x + 1
+   elseif k == "w" then
+      vcam:pan(0, -25)
+   elseif k == "s" then
+      vcam:pan(0, 25)
+   elseif k == "a" then
+      vcam:pan(-25, 0)
+   elseif k == "d" then
+      vcam:pan(25, 0)
    elseif k == "f11" then
       love.graphics.toggleFullscreen()
    end
@@ -79,7 +87,8 @@ end
 
 function love.update (tick)
    if mousedown then
-      vcam:setpos(vcam:posadjust(love.mouse.getX(), love.mouse.getY()))
+      vcam:setpos(vcam:posadjust(love.mouse.getX(),
+				 love.mouse.getY()))
    end
    bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale
 end

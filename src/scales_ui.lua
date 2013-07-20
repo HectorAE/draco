@@ -9,14 +9,17 @@ vcam.x = 0
 vcam.y = 0
 vcam.scale = 1
 vcam.angle = 0
-
-function vcam:zoom (s)
-   self.scale = self.scale * s
-end
+vcam.width = love.graphics.getWidth()
+vcam.height = love.graphics.getHeight()
 
 function vcam:pan (px, py)
    self.x = self.x + (px or 0)
    self.y = self.y + (py or 0)
+end
+
+function vcam:adjpan(px, py)
+   self.x = self.x + ((px * self.scale) or 0)
+   self.y = self.y + ((py * self.scale) or 0)
 end
 
 function vcam:rotate (d)
@@ -28,18 +31,26 @@ function vcam:setpos (px, py)
    self.y = py or self.y
 end
 
--- Take two coordinates and center them to the window and scale
+-- Take two coordinates and center them to the window
 function vcam:posadjust (px, py)
-   local realx = px - ((love.graphics.getWidth() / 2) * self.scale)
-   local realy = py - ((love.graphics.getHeight() / 2) * self.scale)
+   local realx = px - (self.width / 2)
+   local realy = py - (self.height / 2)
    return realx, realy
+end
+
+function vcam:zoom (s)
+   self.scale = self.scale * s
+   local sdiff = (1 - s)
+   self:pan((self.width / 2) * sdiff, (self.height / 2) * sdiff)
+   self.width = (love.graphics.getWidth() * self.scale)
+   self.height = (love.graphics.getHeight() * self.scale)
 end
 
 function vcam:apply ()
    love.graphics.push()
+   love.graphics.scale(1 / self.scale)
    love.graphics.translate(-self.x, -self.y)
    love.graphics.rotate(-self.angle)
-   love.graphics.scale(1 / self.scale)
 end
 
 function vcam:clear ()

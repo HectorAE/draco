@@ -65,13 +65,13 @@ function love.keypressed (k)
    elseif k == "right" and world.levels[1].x < #world.levels[1][1] then
       world.levels[1].x = world.levels[1].x + 1
    elseif k == "w" then
-      vcam:pan(0, -25)
+      vcam:adjpan(0, -25)
    elseif k == "s" then
-      vcam:pan(0, 25)
+      vcam:adjpan(0, 25)
    elseif k == "a" then
-      vcam:pan(-25, 0)
+      vcam:adjpan(-25, 0)
    elseif k == "d" then
-      vcam:pan(25, 0)
+      vcam:adjpan(25, 0)
    elseif k == "f11" then
       love.graphics.toggleFullscreen()
    end
@@ -90,5 +90,6 @@ function love.update (tick)
       vcam:setpos(vcam:posadjust(love.mouse.getX(),
 				 love.mouse.getY()))
    end
-   bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale
+   bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale ..
+      " " .. vcam.width .. " " .. vcam.height
 end

@@ -57,8 +57,27 @@ local function gendragon (opt)
    return attr
 end
 
+-- Basic class constructor (single inheritance)
+local function new_class (parent)
+   local newc = {}
+   if parent then
+      setmetatable(newc, {__index = parent})
+   end
+
+   newc.__index = newc		-- Prepare to be looked up by children
+
+   function newc:new ()
+      local obj = {}
+      setmetatable(obj, self)
+      return obj
+   end
+
+   return newc
+end
+
 local P = {			-- Our package table to export
    gendragon = gendragon,	-- Pub name = local name
+   new_class = new_class,
 }
 
 -- Dynamic package name allocation for requires

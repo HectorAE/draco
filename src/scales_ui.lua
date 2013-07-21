@@ -1,10 +1,12 @@
 -- Package that contains lookup tables and functions for player control
 -- Coded by Hector Escobedo
 
+require "scales"
+
 -- Virtual camera object which controls the view
 -- Anything drawn between the apply and clear functions is transformed
 -- by the virtual camera. Anything drawn outside stays absolute.
-local vcam = {}
+local vcam = scales.new_class()
 vcam.x = 0
 vcam.y = 0
 vcam.scale = 1
@@ -67,11 +69,10 @@ function vcam:clear ()
    love.graphics.pop()
 end
 
--- Constructor function for new vcams
+-- Special constructor function for new vcams
 function vcam:new (x, y, s, a)
    local newcam = {}
    setmetatable(newcam, self)
-   self.__index = self
 
    newcam.x = x or self.x
    newcam.y = y or self.y

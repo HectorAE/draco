@@ -14,14 +14,11 @@ local taxaranktable = {
 
 local trt = taxaranktable
 
-local taxon = {}		-- The taxon base class toolkit
-
--- Function for defining new taxa classes
-function taxon:define (parent)
+-- Custom function for defining new taxa classes
+function new_taxon (parent)
    local nt = {}
    if parent == nil then
-      setmetatable(nt, self)
-      self.__index = self
+      nt.__index = nt
       nt.rankno = 1		-- Root taxon
    else
       setmetatable(nt, {__index = parent})
@@ -39,10 +36,10 @@ function taxon:define (parent)
 end
 
 -- Taxonomic class tree
-local eukaryota = taxon:define()
+local eukaryota = new_taxon()
 eukaryota.domain = "eukaryota"
 
-local animalia = taxon:define(eukaryota)
+local animalia = new_taxon(eukaryota)
 animalia.kingdom = "animalia"
 
 animalia.arms = 0
@@ -51,25 +48,25 @@ animalia.fins = 0
 animalia.legs = 0
 animalia.wings = 0
 
-local chordata = taxon:define(animalia)
+local chordata = new_taxon(animalia)
 chordata.phylum = "chordata"
 
-local mammalia = taxon:define(chordata)
+local mammalia = new_taxon(chordata)
 mammalia.class = "mammalia"
 
-local primates = taxon:define(mammalia)
+local primates = new_taxon(mammalia)
 primates.order = "primates"
 
 primates.arms = 2
 primates.legs = 2
 
-local hominidae = taxon:define(primates)
+local hominidae = new_taxon(primates)
 hominidae.family = "hominidae"
 
-local homo = taxon:define(hominidae)
+local homo = new_taxon(hominidae)
 homo.genus = "homo"
 
-local homo_sapiens = taxon:define(homo)
+local homo_sapiens = new_taxon(homo)
 homo_sapiens.species = "sapiens"
 
 homo_sapiens.name = {
@@ -77,10 +74,10 @@ homo_sapiens.name = {
    english_pl = "humans",
 }
 
-local pan = taxon:define(hominidae)
+local pan = new_taxon(hominidae)
 pan.genus = "pan"
 
-local pan_troglodytes = taxon:define(pan)
+local pan_troglodytes = new_taxon(pan)
 pan_troglodytes.species = "troglodytes"
 
 pan_troglodytes.name = {
@@ -88,18 +85,18 @@ pan_troglodytes.name = {
    english_pl = "chimpanzees",
 }
 
-local carnivora = taxon:define(mammalia)
+local carnivora = new_taxon(mammalia)
 carnivora.order = "carnivora"
 
-local canidae = taxon:define(carnivora)
+local canidae = new_taxon(carnivora)
 canidae.family = "canidae"
 
 canidae.legs = 4
 
-local canis = taxon:define(canidae)
+local canis = new_taxon(canidae)
 canis.genus = "canis"
 
-local canis_lupus = taxon:define(canis)
+local canis_lupus = new_taxon(canis)
 canis_lupus.species = "lupus"
 
 canis_lupus.name = {
@@ -117,7 +114,7 @@ local species = {
 local P = {			-- Our package table to export
    species = species,		-- Pub name = local name
    taxaranktable = taxaranktable,
-   taxon = taxon,
+   new_taxon = new_taxon,
 }
 
 -- Dynamic package name allocation for requires

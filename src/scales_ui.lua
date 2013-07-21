@@ -14,6 +14,16 @@ vcam.angle = 0
 vcam.width = love.graphics.getWidth()
 vcam.height = love.graphics.getHeight()
 
+-- The bounding box
+vcam.lbound = 0
+vcam.rbound = love.graphics.getWidth()
+vcam.ubound = 0
+vcam.dbound = love.graphics.getHeight()
+
+-- Zoom limits
+vcam.inlimit = .25
+vcam.outlimit = 1
+
 -- Panning function, in absolute terms
 function vcam:pan (px, py)
    self.x = self.x + (px or 0)
@@ -46,8 +56,9 @@ end
 
 -- Centered zoom function, took forever to get right
 function vcam:zoom (s)
-   self.scale = self.scale * s
-   local sdiff = (1 - s)
+   local cs = self:checkzoom(s)
+   self.scale = self.scale * cs
+   local sdiff = (1 - cs)
    self:pan((self.width / 2) * sdiff, (self.height / 2) * sdiff)
    -- Only update height and width _after_ the centering pan
    self.width = (love.graphics.getWidth() * self.scale)
@@ -58,7 +69,45 @@ function vcam:setzoom (z)
    self:zoom(z / self.scale)
 end
 
+-- Helper function to correct out-of-bounds zooms
+function vcam:checkzoom (s)
+   -- This correction shouldn't happen very often
+   if self.scale > self.outlimit then
+      self.scale = self.outlimit
+      return 1
+   elseif self.scale < self.inlimit then
+      self.scale = self.inlimit
+      return 1
+   end
+
+   -- If we're going to overshoot then just set to the limit
+   if self.scale * s > self.outlimit then
+      return self.outlimit / self.scale
+   elseif self.scale * s < self.inlimit then
+      return self.inlimit / self.scale
+   end
+
+   return s
+end
+
+-- Handy function to anchor the view within a box
+function vcam:checkbounds ()
+   if self.x < self.lbound then
+      self.x = self.lbound
+   elseif (self.x + self.width) > self.rbound then
+      self.x = (self.rbound - self.width)
+   end
+
+   if self.y < self.ubound then
+      self.y = self.ubound
+   elseif (self.y + self.height) > self.dbound then
+      self.y = (self.dbound - self.height)
+   end
+end
+
 function vcam:apply ()
+   self:checkbounds()		-- Obey the boundaries
+
    love.graphics.push()
    love.graphics.scale(1 / self.scale)
    love.graphics.translate(-self.x, -self.y)

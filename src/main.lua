@@ -19,7 +19,7 @@ local idprint = dragon.name .. " is a " .. dragon.colorscheme.maincolor .. " " .
 
 -- print(idprint)
 
-local vcam = scales_ui.vcam
+local vcam = scales_ui.vcam:new()
 
 local bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale
 

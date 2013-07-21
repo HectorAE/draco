@@ -38,7 +38,7 @@ function love.draw ()
    mapdraw(world.levels[1], tiles, 32, love.graphics.draw)
 
    love.graphics.printf(idprint, 0, 400, 800, "center")
-   love.graphics.printf(bugprint, 0, 200, 800, "center")
+   love.graphics.printf(bugprint, 0, 380, 800, "center")
    love.graphics.draw(picdragon, 300, 300)
    vcam:clear()
 
@@ -72,6 +72,12 @@ function love.keypressed (k)
       vcam:adjpan(-25, 0)
    elseif k == "d" then
       vcam:adjpan(25, 0)
+   elseif k == "1" then
+      vcam:setzoom(.8)
+   elseif k == "2" then
+      vcam:setzoom(1)
+   elseif k == "3" then
+      vcam:setzoom(1.25)
    elseif k == "f11" then
       love.graphics.toggleFullscreen()
    end

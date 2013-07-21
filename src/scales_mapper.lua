@@ -42,8 +42,8 @@ local function mapdraw (map, tileset, tilesize, drawer)
       for x=1, (#map[y] - map.x) do
 	 drawer(
 	    tileset[map[y+map.y][x+map.x]],
-	    (x*tilesize),
-	    (y*tilesize))
+	    ((x-1)*tilesize),	-- Minus one so we start at the origin
+	    ((y-1)*tilesize))
       end
    end
 end

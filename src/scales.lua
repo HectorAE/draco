@@ -61,7 +61,7 @@ end
 local function new_class (parent)
    local newc = {}
    if parent then
-      setmetatable(newc, {__index = parent})
+      setmetatable(newc, parent) -- Parent class should have __index
    end
 
    newc.__index = newc		-- Prepare to be looked up by children

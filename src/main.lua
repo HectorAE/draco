@@ -5,13 +5,16 @@ require "scales"
 require "scales_ui"
 require "scales_data"
 require "scales_mapper"
+require "scales_entity"
 
 local world = scales_mapper.world
 local mapdraw = scales_mapper.mapdraw
+local entity = scales_entity.entity
 
 data = scales_data
 
-local dragon = scales.gendragon()	-- Constructor for the table of attributes for the player's dragon
+local dragon = entity:new()
+dragon = scales.gendragon(dragon)	-- Constructor for the table of attributes for the player's dragon
 
 dragon.name = "Neirada"
 
@@ -28,7 +31,9 @@ local mousedown = false
 local tiles = {}
 
 function love.load ()
-   picdragon = love.graphics.newImage("img/placeholder.png")
+   dragon:load_sprite("img/placeholder.png")
+   dragon.x = 300
+   dragon.y = 300
    button = love.graphics.newImage("img/button.png")
    scales_mapper.loadtiles("img/tiles", world.tileindex, love.graphics.newImage, tiles)
 end
@@ -38,7 +43,7 @@ function love.draw ()
    mapdraw(world.levels[1], tiles, 32, love.graphics.draw)
 
    love.graphics.printf(idprint, 0, 400, 800, "center")
-   love.graphics.draw(picdragon, 300, 300)
+   love.graphics.draw(dragon.sprite, dragon.x, dragon.y)
    vcam:clear()
 
    love.graphics.draw(button, 0, 0)
@@ -56,13 +61,21 @@ function love.keypressed (k)
       vcam:zoom(.8)
    elseif k == "-" then
       vcam:zoom(1.25)
-   elseif k == "up" and world.levels[1].y > 0 then
+   elseif k == "up" then
+      dragon.y = dragon.y - 10
+   elseif k == "down" then
+      dragon.y = dragon.y + 10
+   elseif k == "left" then
+      dragon.x = dragon.x - 10
+   elseif k == "right" then
+      dragon.x = dragon.x + 10
+   elseif k == "j" and world.levels[1].y < #world.levels[1] then
       world.levels[1].y = world.levels[1].y - 1
-   elseif k == "down" and world.levels[1].y < #world.levels[1] then
+   elseif k == "k" and world.levels[1].y < #world.levels[1] then
       world.levels[1].y = world.levels[1].y + 1
-   elseif k == "left" and world.levels[1].x > 0 then
+   elseif k == "l" and world.levels[1].x > 0 then
       world.levels[1].x = world.levels[1].x - 1
-   elseif k == "right" and world.levels[1].x < #world.levels[1][1] then
+   elseif k == "h" and world.levels[1].x < #world.levels[1][1] then
       world.levels[1].x = world.levels[1].x + 1
    elseif k == "w" then
       vcam:adjpan(0, -25)

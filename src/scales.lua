@@ -48,13 +48,11 @@ local function gendragon (opt)
    if opt == nil then
       opt = {}
    end
-   local attr = {
-      breathtype = opt.breathtype or randselect(data.breathtable),
-      sex = opt.sex or randselect(data.sextable),
-      colorscheme = gencolorscheme(opt.colorscheme),
-      claws = opt.claws or randselect(data.clawtable),
-   }
-   return attr
+   opt.breathtype = opt.breathtype or randselect(data.breathtable)
+   opt.sex = opt.sex or randselect(data.sextable)
+   opt.colorscheme = gencolorscheme(opt.colorscheme)
+   opt.claws = opt.claws or randselect(data.clawtable)
+   return opt
 end
 
 -- Basic class constructor (single inheritance)

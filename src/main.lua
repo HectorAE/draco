@@ -30,11 +30,33 @@ local mousedown = false
 
 local tiles = {}
 
+local cacti = {}
+
+for c=1,3 do
+   cacti[c] = entity:new()
+end
+
 function love.load ()
+   love.keyboard.setKeyRepeat(true)
+   love.graphics.setDefaultImageFilter("nearest", "nearest") -- Makes things sharper when zoomed in
+   button = love.graphics.newImage("img/button.png")
+   love.graphics.setIcon(button)
+
    dragon:load_sprite("img/placeholder.png")
    dragon.x = 300
    dragon.y = 300
-   button = love.graphics.newImage("img/button.png")
+
+   for c=1,#cacti do
+      cacti[c]:load_sprite("img/cactus.png")
+   end
+
+   cacti[1].x = 40
+   cacti[1].y = 120
+   cacti[2].x = 80
+   cacti[2].y = 10
+   cacti[3].x = 230
+   cacti[3].y = 200
+
    scales_mapper.loadtiles("img/tiles", world.tileindex, love.graphics.newImage, tiles)
 end
 
@@ -43,6 +65,11 @@ function love.draw ()
    mapdraw(world.levels[1], tiles, 32, love.graphics.draw)
 
    love.graphics.printf(idprint, 0, 400, 800, "center")
+
+   for c=1,#cacti do
+      cacti[c]:render()
+   end
+
    dragon:render()
    vcam:clear()
 
@@ -66,9 +93,9 @@ function love.keypressed (k)
    elseif k == "down" then
       dragon.y = dragon.y + 10
    elseif k == "left" then
-      dragon.x = dragon.x - 10
+      dragon.angle = dragon.angle - (math.pi / 10)
    elseif k == "right" then
-      dragon.x = dragon.x + 10
+      dragon.angle = dragon.angle + (math.pi / 10)
    elseif k == "j" and world.levels[1].y > 0 then
       world.levels[1].y = world.levels[1].y - 1
    elseif k == "k" and world.levels[1].y < #world.levels[1] then
@@ -96,11 +123,11 @@ function love.keypressed (k)
    end
 end
 
-function love.mousepressed()
+function love.mousepressed ()
    mousedown = true
 end
 
-function love.mousereleased()
+function love.mousereleased ()
    mousedown = false
 end
 

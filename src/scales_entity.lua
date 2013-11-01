@@ -10,20 +10,28 @@ entity.sprite = nil
 -- Takes an image file as a sprite
 function entity:load_sprite (file)
    self.sprite = love.graphics.newImage(file)
+   self.width = self.sprite:getWidth()
+   self.height = self.sprite:getHeight()
 end
 
 -- Takes a preexisting image object as a sprite
 function entity:change_sprite (image)
    self.sprite = image
+   self.width = self.sprite:getWidth()
+   self.height = self.sprite:getHeight()
 end
 
 -- Complete function for rendering the sprite on-screen
 function entity:render ()
-   love.graphics.draw(self.sprite, self.x, self.y)
+   love.graphics.draw(self.sprite, self.x, self.y, self.angle, self.scale, self.scale, (self.width / 2), (self.height / 2))
 end
 
-entity.x = nil
-entity.y = nil
+entity.x = 0
+entity.y = 0
+entity.scale = 1
+entity.angle = 0
+entity.width = nil
+entity.height = nil
 
 local P = {			-- Our package table to export
    entity = entity,		-- Pub name = local name

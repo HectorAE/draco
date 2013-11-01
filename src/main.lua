@@ -43,7 +43,7 @@ function love.draw ()
    mapdraw(world.levels[1], tiles, 32, love.graphics.draw)
 
    love.graphics.printf(idprint, 0, 400, 800, "center")
-   love.graphics.draw(dragon.sprite, dragon.x, dragon.y)
+   dragon:render()
    vcam:clear()
 
    love.graphics.draw(button, 0, 0)
@@ -69,7 +69,7 @@ function love.keypressed (k)
       dragon.x = dragon.x - 10
    elseif k == "right" then
       dragon.x = dragon.x + 10
-   elseif k == "j" and world.levels[1].y < #world.levels[1] then
+   elseif k == "j" and world.levels[1].y > 0 then
       world.levels[1].y = world.levels[1].y - 1
    elseif k == "k" and world.levels[1].y < #world.levels[1] then
       world.levels[1].y = world.levels[1].y + 1

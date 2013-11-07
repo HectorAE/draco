@@ -33,8 +33,23 @@ entity.angle = 0
 entity.width = nil
 entity.height = nil
 
+local clickable = scales.new_class(entity)
+
+clickable.onclick = nil
+
+function clickable:check ()
+   if love.mouse.getX() >= (self.x - (self.width / 2)) and love.mouse.getX() <= (self.x + (self.width / 2)) and love.mouse.getY() >= (self.y - (self.height / 2)) and love.mouse.getY() <= (self.y + (self.height / 2)) then
+      -- self.onhover()
+      if love.mouse.isDown("l") then
+	 self.onclick()
+	 return true
+      end
+   end
+end
+
 local P = {			-- Our package table to export
    entity = entity,		-- Pub name = local name
+   clickable = clickable,
 }
 
 -- Dynamic package name allocation for requires

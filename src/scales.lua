@@ -73,9 +73,12 @@ local function new_class (parent)
    return newc
 end
 
+local state = nil
+
 local P = {			-- Our package table to export
    gendragon = gendragon,	-- Pub name = local name
    new_class = new_class,
+   state = state,
 }
 
 -- Dynamic package name allocation for requires

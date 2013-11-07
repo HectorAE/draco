@@ -10,6 +10,9 @@ require "scales_entity"
 local world = scales_mapper.world
 local mapdraw = scales_mapper.mapdraw
 local entity = scales_entity.entity
+local clickable = scales_entity.clickable
+local screen = scales_ui.screen
+local state = scales.state
 
 data = scales_data
 
@@ -19,6 +22,12 @@ dragon = scales.gendragon(dragon)	-- Constructor for the table of attributes for
 dragon.name = "Neirada"
 
 local idprint = dragon.name .. " is a " .. dragon.colorscheme.maincolor .. " " .. dragon.sex .. " " .. dragon.breathtype .. " dragon."
+
+local startmenu = clickable:new()
+
+function startmenu.onclick ()
+   state = "play"
+end
 
 -- print(idprint)
 
@@ -30,11 +39,13 @@ local mousedown = false
 
 local tiles = {}
 
-local cacti = {}
+local cacti = screen:new()
 
 for c=1,3 do
    cacti[c] = entity:new()
 end
+
+local hud = screen:new()
 
 function love.load ()
    love.keyboard.setKeyRepeat(true)
@@ -45,6 +56,10 @@ function love.load ()
    dragon:load_sprite("img/placeholder.png")
    dragon.x = 300
    dragon.y = 300
+
+   startmenu:load_sprite("img/start.png")
+   startmenu.x = 400
+   startmenu.y = 250
 
    for c=1,#cacti do
       cacti[c]:load_sprite("img/cactus.png")
@@ -58,23 +73,28 @@ function love.load ()
    cacti[3].y = 200
 
    scales_mapper.loadtiles("img/tiles", world.tileindex, love.graphics.newImage, tiles)
+   state = "start"
 end
 
 function love.draw ()
-   vcam:apply()
-   mapdraw(world.levels[1], tiles, 32, love.graphics.draw)
 
-   love.graphics.printf(idprint, 0, 400, 800, "center")
+   if state == "play" then
+      vcam:apply()
+      mapdraw(world.levels[1], tiles, 32, love.graphics.draw)
 
-   for c=1,#cacti do
-      cacti[c]:render()
+      love.graphics.printf(idprint, 0, 400, 800, "center")
+
+      cacti:render()
+
+      dragon:render()
+      vcam:clear()
+
+      love.graphics.draw(button, 0, 0)
+      love.graphics.printf(bugprint, 50, 10, 800, "center")
+   elseif state == "start" then
+      startmenu:render()
    end
 
-   dragon:render()
-   vcam:clear()
-
-   love.graphics.draw(button, 0, 0)
-   love.graphics.printf(bugprint, 50, 10, 800, "center")
 end
 
 function love.keypressed (k)
@@ -83,43 +103,49 @@ function love.keypressed (k)
       love.event.quit()
    end
 
-   -- All other keys, using the argument
-   if k == "=" then
-      vcam:zoom(.8)
-   elseif k == "-" then
-      vcam:zoom(1.25)
-   elseif k == "up" then
-      dragon.y = dragon.y - 10
-   elseif k == "down" then
-      dragon.y = dragon.y + 10
-   elseif k == "left" then
-      dragon.angle = dragon.angle - (math.pi / 10)
-   elseif k == "right" then
-      dragon.angle = dragon.angle + (math.pi / 10)
-   elseif k == "j" and world.levels[1].y > 0 then
-      world.levels[1].y = world.levels[1].y - 1
-   elseif k == "k" and world.levels[1].y < #world.levels[1] then
-      world.levels[1].y = world.levels[1].y + 1
-   elseif k == "l" and world.levels[1].x > 0 then
-      world.levels[1].x = world.levels[1].x - 1
-   elseif k == "h" and world.levels[1].x < #world.levels[1][1] then
-      world.levels[1].x = world.levels[1].x + 1
-   elseif k == "w" then
-      vcam:adjpan(0, -25)
-   elseif k == "s" then
-      vcam:adjpan(0, 25)
-   elseif k == "a" then
-      vcam:adjpan(-25, 0)
-   elseif k == "d" then
-      vcam:adjpan(25, 0)
-   elseif k == "1" then
-      vcam:setzoom(1)
-   elseif k == "2" then
-      vcam:setzoom(.8)
-   elseif k == "3" then
-      vcam:setzoom(.64)
-   elseif k == "f11" then
-      love.graphics.toggleFullscreen()
+   if state == "play" then
+      -- All other keys, using the argument
+      if k == "=" then
+	 vcam:zoom(.8)
+      elseif k == "-" then
+	 vcam:zoom(1.25)
+      elseif k == "up" then
+	 dragon.y = dragon.y - 10
+      elseif k == "down" then
+	 dragon.y = dragon.y + 10
+      elseif k == "left" then
+	 dragon.angle = dragon.angle - (math.pi / 10)
+      elseif k == "right" then
+	 dragon.angle = dragon.angle + (math.pi / 10)
+      elseif k == "j" and world.levels[1].y > 0 then
+	 world.levels[1].y = world.levels[1].y - 1
+      elseif k == "k" and world.levels[1].y < #world.levels[1] then
+	 world.levels[1].y = world.levels[1].y + 1
+      elseif k == "l" and world.levels[1].x > 0 then
+	 world.levels[1].x = world.levels[1].x - 1
+      elseif k == "h" and world.levels[1].x < #world.levels[1][1] then
+	 world.levels[1].x = world.levels[1].x + 1
+      elseif k == "w" then
+	 vcam:adjpan(0, -25)
+      elseif k == "s" then
+	 vcam:adjpan(0, 25)
+      elseif k == "a" then
+	 vcam:adjpan(-25, 0)
+      elseif k == "d" then
+	 vcam:adjpan(25, 0)
+      elseif k == "1" then
+	 vcam:setzoom(1)
+      elseif k == "2" then
+	 vcam:setzoom(.8)
+      elseif k == "3" then
+	 vcam:setzoom(.64)
+      elseif k == "f11" then
+	 love.graphics.toggleFullscreen()
+      end
+   else
+      if k == "f11" then
+	 love.graphics.toggleFullscreen()
+      end
    end
 end
 
@@ -132,10 +158,14 @@ function love.mousereleased ()
 end
 
 function love.update (tick)
-   if mousedown then
-      vcam:setpos(vcam:posadjust(love.mouse.getX(),
-				 love.mouse.getY()))
+   if state == "play" then
+      if mousedown then
+	 vcam:setpos(vcam:posadjust(love.mouse.getX(),
+				    love.mouse.getY()))
+      end
+      bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale ..
+	 " " .. vcam.width .. " " .. vcam.height
+   elseif state == "start" then
+      startmenu:check()
    end
-   bugprint = vcam.x .. " " .. vcam.y .. " " .. vcam.scale ..
-      " " .. vcam.width .. " " .. vcam.height
 end

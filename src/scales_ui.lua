@@ -142,9 +142,19 @@ local function ctrlk (k)
    end
 end
 
+-- A screen is a just collection of entities
+local screen = scales.new_class()
+
+function screen:render ()
+   for e=1,#self do
+      self[e]:render()
+   end
+end
+
 local P = {			-- Our package table to export
    ctrlk = ctrlk,	-- Pub name = local name
    vcam = vcam,
+   screen = screen,
 }
 
 -- Dynamic package name allocation for requires

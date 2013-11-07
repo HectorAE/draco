@@ -1,4 +1,4 @@
--- LOVE configuration file for Draco
+-- LOVE configuration file for Scales
 -- Coded by Hector Escobedo
 
 function love.conf(t)

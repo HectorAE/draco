@@ -6,7 +6,7 @@ DESTDIR = /
 all : scales.love
 
 scales.love : src
-	zip -r -q -9 scales.love src
+	cd src && zip -r -q -9 ../scales.love .
 
 install :
 ifeq ($(findstring scales.love,$(wildcard *.love)),scales.love)

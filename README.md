@@ -12,8 +12,22 @@ yet ready for distribution.
 Install
 -------
 
-The [LÖVE framework](https://love2d.org/) will set up and run Scales
-appropriately for your platform.
+### Linux, BSD and Unix ###
+
+The installation process for Unix-like systems is very simple. Open up
+a shell (using a program called "Terminal" or "Console" or something like
+that) and follow these instructions, assuming you cloned or downloaded the
+repository into the directory "~/Downloads/scales":
+
+```
+cd Downloads/scales
+ls # You should see the file "Makefile"
+make
+sudo make install
+```
+
+And there you go! Note that using this method, you cannot automatically
+uninstall the game, as you could if you used a package or port.
 
 Maintainer
 ----------

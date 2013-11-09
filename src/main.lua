@@ -45,13 +45,21 @@ for c=1,3 do
    cacti[c] = entity:new()
 end
 
+local button = love.graphics.newImage("img/button.png")
+love.graphics.setIcon(button)
+
+local menuicon = entity:new()
+menuicon:change_sprite(button)
+menuicon.x = menuicon.width / 2
+menuicon.y = menuicon.height / 2
+
 local hud = screen:new()
+
+local sleeping = false
 
 function love.load ()
    love.keyboard.setKeyRepeat(true)
    love.graphics.setDefaultImageFilter("nearest", "nearest") -- Makes things sharper when zoomed in
-   button = love.graphics.newImage("img/button.png")
-   love.graphics.setIcon(button)
 
    dragon:load_sprite("img/placeholder.png")
    dragon.x = 300
@@ -89,7 +97,7 @@ function love.draw ()
       dragon:render()
       vcam:clear()
 
-      love.graphics.draw(button, 0, 0)
+      menuicon:render()
       love.graphics.printf(bugprint, 50, 10, 800, "center")
    elseif state == "start" then
       startmenu:render()
@@ -133,6 +141,12 @@ function love.keypressed (k)
 	 vcam:adjpan(-25, 0)
       elseif k == "d" then
 	 vcam:adjpan(25, 0)
+      elseif k == "v" then
+	 if sleeping then
+	    sleeping = false
+	 else
+	    sleeping = true
+	 end
       elseif k == "1" then
 	 vcam:setzoom(1)
       elseif k == "2" then
@@ -167,5 +181,17 @@ function love.update (tick)
 	 " " .. vcam.width .. " " .. vcam.height
    elseif state == "start" then
       startmenu:check()
+   end
+
+   if sleeping then
+      scales_ui.fade(menuicon, 20)
+      for c=1,#cacti do
+	 scales_ui.fade(cacti[c], 1)
+      end
+   else
+      menuicon.alpha = 255
+      for c=1,#cacti do
+	 cacti[c].alpha = 255
+      end
    end
 end

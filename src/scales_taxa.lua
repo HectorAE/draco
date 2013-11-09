@@ -15,7 +15,7 @@ local taxaranktable = {
 local trt = taxaranktable
 
 -- Custom function for defining new taxa classes
-function new_taxon (parent)
+local function new_taxon (parent)
    local nt = {}
    if parent == nil then
       nt.__index = nt

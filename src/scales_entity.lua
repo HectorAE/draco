@@ -23,7 +23,9 @@ end
 
 -- Complete function for rendering the sprite on-screen
 function entity:render ()
+   love.graphics.setColor(255, 255, 255, self.alpha)
    love.graphics.draw(self.sprite, self.x, self.y, self.angle, self.scale, self.scale, (self.width / 2), (self.height / 2))
+   love.graphics.setColor(255, 255, 255, 255)
 end
 
 entity.x = 0
@@ -32,6 +34,7 @@ entity.scale = 1
 entity.angle = 0
 entity.width = nil
 entity.height = nil
+entity.alpha = 255
 
 function entity:forward (px)
    self.y = self.y - (math.cos(self.angle) * 10)

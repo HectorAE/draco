@@ -151,10 +151,26 @@ function screen:render ()
    end
 end
 
+-- Function that fades an entity by tiny increments
+local function fade (ent, rate)
+   love.timer.sleep(1 / 300)
+   if ent.alpha > 0 then
+      if rate <= ent.alpha then
+	 ent.alpha = ent.alpha - rate
+      else
+	 ent.alpha = 0
+      end
+      return 0
+   else
+      return 1
+   end
+end
+
 local P = {			-- Our package table to export
    ctrlk = ctrlk,	-- Pub name = local name
    vcam = vcam,
    screen = screen,
+   fade = fade,
 }
 
 -- Dynamic package name allocation for requires

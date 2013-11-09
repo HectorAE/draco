@@ -110,9 +110,9 @@ function love.keypressed (k)
       elseif k == "-" then
 	 vcam:zoom(1.25)
       elseif k == "up" then
-	 dragon.y = dragon.y - 10
+	 dragon:forward(10)
       elseif k == "down" then
-	 dragon.y = dragon.y + 10
+	 dragon:backward(10)
       elseif k == "left" then
 	 dragon.angle = dragon.angle - (math.pi / 10)
       elseif k == "right" then

@@ -33,6 +33,16 @@ entity.angle = 0
 entity.width = nil
 entity.height = nil
 
+function entity:forward (px)
+   self.y = self.y - (math.cos(self.angle) * 10)
+   self.x = self.x + (math.sin(self.angle) * 10)
+end
+
+function entity:backward (px)
+   self.y = self.y + (math.cos(self.angle) * 10)
+   self.x = self.x - (math.sin(self.angle) * 10)
+end
+
 local clickable = scales.new_class(entity)
 
 clickable.onclick = nil

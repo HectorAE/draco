@@ -15,12 +15,14 @@ vcam.width = love.graphics.getWidth()
 vcam.height = love.graphics.getHeight()
 
 -- The bounding box
+-- Set to nil to ignore a boundary
 vcam.lbound = 0
 vcam.rbound = love.graphics.getWidth()
 vcam.ubound = 0
 vcam.dbound = love.graphics.getHeight()
 
 -- Zoom limits
+-- Set to nil for no limit
 vcam.inlimit = .25
 vcam.outlimit = 1
 
@@ -72,36 +74,54 @@ end
 -- Helper function to correct out-of-bounds zooms
 function vcam:checkzoom (s)
    -- This correction shouldn't happen very often
-   if self.scale > self.outlimit then
-      self.scale = self.outlimit
-      return 1
-   elseif self.scale < self.inlimit then
-      self.scale = self.inlimit
-      return 1
+   if self.outlimit then
+      if self.scale > self.outlimit then
+	 self.scale = self.outlimit
+	 return 1
+      end
+      if self.scale * s > self.outlimit then -- Overshooting
+	 return self.outlimit / self.scale
+      end
    end
 
-   -- If we're going to overshoot then just set to the limit
-   if self.scale * s > self.outlimit then
-      return self.outlimit / self.scale
-   elseif self.scale * s < self.inlimit then
-      return self.inlimit / self.scale
+   if self.inlimit then
+      if self.scale < self.inlimit then
+	 self.scale = self.inlimit
+	 return 1
+      end
+      if self.scale * s < self.inlimit then
+	 return self.inlimit / self.scale
+      end
    end
 
+   -- Otherwise this zoom level is fine
    return s
 end
 
 -- Handy function to anchor the view within a box
 function vcam:checkbounds ()
-   if self.x < self.lbound then
-      self.x = self.lbound
-   elseif (self.x + self.width) > self.rbound then
-      self.x = (self.rbound - self.width)
+   if self.lbound then
+      if self.x < self.lbound then
+	 self.x = self.lbound
+      end
    end
 
-   if self.y < self.ubound then
-      self.y = self.ubound
-   elseif (self.y + self.height) > self.dbound then
-      self.y = (self.dbound - self.height)
+   if self.rbound then
+      if (self.x + self.width) > self.rbound then
+	 self.x = (self.rbound - self.width)
+      end
+   end
+
+   if self.ubound then
+      if self.y < self.ubound then
+	 self.y = self.ubound
+      end
+   end
+
+   if self.dbound then
+      if (self.y + self.height) > self.dbound then
+	 self.y = (self.dbound - self.height)
+      end
    end
 end
 

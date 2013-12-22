@@ -7,8 +7,8 @@ function love.conf(t)
    t.url = "http://github.com/HectorAE/scales"
    t.identity = "scales"
 
-   t.screen.width = 1200
-   t.screen.height = 650
+   t.window.width = 1200
+   t.window.height = 650
 
    t.modules.joystick = false
 end

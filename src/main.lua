@@ -45,8 +45,9 @@ for c=1,3 do
    cacti[c] = entity:new()
 end
 
-local button = love.graphics.newImage("img/button.png")
-love.graphics.setIcon(button)
+local buttondata = love.image.newImageData("img/button.png")
+local button = love.graphics.newImage(buttondata)
+love.window.setIcon(buttondata)
 
 local menuicon = entity:new()
 menuicon:change_sprite(button)

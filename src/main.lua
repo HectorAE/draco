@@ -59,7 +59,7 @@ local sleeping = false
 
 function love.load ()
    love.keyboard.setKeyRepeat(true)
-   love.graphics.setDefaultImageFilter("nearest", "nearest") -- Makes things sharper when zoomed in
+   love.graphics.setDefaultFilter("nearest", "nearest") -- Makes things sharper when zoomed in
 
    dragon:load_sprite("img/placeholder.png")
    dragon.x = 300

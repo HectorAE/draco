@@ -11,15 +11,15 @@ vcam.x = 0
 vcam.y = 0
 vcam.scale = 1
 vcam.angle = 0
-vcam.width = love.graphics.getWidth()
-vcam.height = love.graphics.getHeight()
+vcam.width = love.window.getWidth()
+vcam.height = love.window.getHeight()
 
 -- The bounding box
 -- Set to nil to ignore a boundary
 vcam.lbound = 0
-vcam.rbound = love.graphics.getWidth()
+vcam.rbound = love.window.getWidth()
 vcam.ubound = 0
-vcam.dbound = love.graphics.getHeight()
+vcam.dbound = love.window.getHeight()
 
 -- Zoom limits
 -- Set to nil for no limit
@@ -63,8 +63,8 @@ function vcam:zoom (s)
    local sdiff = (1 - cs)
    self:pan((self.width / 2) * sdiff, (self.height / 2) * sdiff)
    -- Only update height and width _after_ the centering pan
-   self.width = (love.graphics.getWidth() * self.scale)
-   self.height = (love.graphics.getHeight() * self.scale)
+   self.width = (love.window.getWidth() * self.scale)
+   self.height = (love.window.getHeight() * self.scale)
 end
 
 function vcam:setzoom (z)
@@ -147,8 +147,8 @@ function vcam:new (x, y, s, a)
    newcam.y = y or self.y
    newcam.scale = s or self.scale
    newcam.angle = a or self.angle
-   newcam.width = love.graphics.getWidth() * newcam.scale
-   newcam.height = love.graphics.getHeight() * newcam.scale
+   newcam.width = love.window.getWidth() * newcam.scale
+   newcam.height = love.window.getHeight() * newcam.scale
 
    return newcam
 end

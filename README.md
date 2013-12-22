@@ -1,13 +1,19 @@
 Scales
 ======
 
-**Scales** is an interactive dragon experience. Exult in the sheer 
-elemental power of your ancient bloodline. Don't play a dragon, _be_ a 
-dragon. In this world, there is little to nothing holding you back from 
+**Scales** is an interactive dragon experience. Exult in the sheer
+elemental power of your ancient bloodline. Don't play a dragon, _be_ a
+dragon. In this world, there is little to nothing holding you back from
 doing whatever you want.
 
 This game is still in development. It is considered unstable and not
-yet ready for distribution.
+yet ready for distribution. The current working LÖVE version is 0.9.0.
+
+Dependencies
+------------
+
+You must install [LÖVE](http://love2d.org/) before installing Scales.
+Get the latest version listed on the home page.
 
 Install
 -------

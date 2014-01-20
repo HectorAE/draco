@@ -186,11 +186,66 @@ local function fade (ent, rate)
    end
 end
 
+-- Standard keymap
+-- The 'repeated' subtable holds keybindings that are continually executed when the key
+-- is held down. The 'norepeated' subtable holds keybindings that are only executed once
+-- every key press. They may not share keys.
+local keymap = {
+   repeated = {
+      ["a"] = "vcam:adjpan(-10, 0)",
+      ["d"] = "vcam:adjpan(10, 0)",
+      ["s"] = "vcam:adjpan(0, 10)",
+      ["w"] = "vcam:adjpan(0, -10)",
+      ["up"] = "dragon:forward(5)",
+      ["down"] = "dragon:backward(5)",
+      ["right"] = "dragon.angle = dragon.angle + (math.pi / 20)",
+      ["left"] = "dragon.angle = dragon.angle - (math.pi / 20)",
+   },
+   norepeated = {
+      ["-"] = "vcam:zoom(1.25)",
+      ["="] = "vcam:zoom(.8)",
+      ["1"] = "vcam:setzoom(1)",
+      ["2"] = "vcam:setzoom(.8)",
+      ["3"] = "vcam:setzoom(.64)",
+      ["h"] = "if world.levels[1].x < #world.levels[1][1] then world.levels[1].x = world.levels[1].x + 1 end",
+      ["j"] = "if world.levels[1].y > 0 then world.levels[1].y = world.levels[1].y - 1 end",
+      ["k"] = "if world.levels[1].y < #world.levels[1] then world.levels[1].y = world.levels[1].y + 1 end",
+      ["l"] = "if world.levels[1].x > 0 then world.levels[1].x = world.levels[1].x - 1 end",
+      ["v"] = "if sleeping then sleeping = false else sleeping = true end",
+      ["f11"] = "love.window.setFullscreen(not love.window.getFullscreen())",
+   },
+}
+
+-- Function that automatically handles keybindings when
+-- given a keymap. Note that currently only globals are
+-- supported in keybindings.
+local function keycontrol (keys, environment)
+   for k,v in pairs(keys.repeated) do
+      if love.keyboard.isDown(k) then
+	 local x = load(v)
+	 setfenv(x, environment)
+	 x()
+      end
+   end
+   function love.keypressed (k, r)
+      if keys.norepeated[k] ~= nil and not r then
+	 local x = load(keys.norepeated[k])
+	 setfenv(x, environment)
+	 x()
+      end
+      if scales_ui.ctrlk("q") then
+	 love.event.quit()
+      end
+   end
+end
+
 local P = {			-- Our package table to export
    ctrlk = ctrlk,	-- Pub name = local name
    vcam = vcam,
    screen = screen,
    fade = fade,
+   keycontrol = keycontrol,
+   keymap = keymap,
 }
 
 -- Dynamic package name allocation for requires

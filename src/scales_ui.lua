@@ -16,10 +16,10 @@ vcam.height = love.window.getHeight()
 
 -- The bounding box
 -- Set to nil to ignore a boundary
-vcam.lbound = 0
-vcam.rbound = love.window.getWidth()
-vcam.ubound = 0
-vcam.dbound = love.window.getHeight()
+vcam.lbound = nil
+vcam.rbound = nil
+vcam.ubound = nil
+vcam.dbound = nil
 
 -- Zoom limits
 -- Set to nil for no limit
@@ -162,30 +162,6 @@ local function ctrlk (k)
    end
 end
 
--- A screen is a just collection of entities
-local screen = scales.new_class()
-
-function screen:render ()
-   for e=1,#self do
-      self[e]:render()
-   end
-end
-
--- Function that fades an entity by tiny increments
-local function fade (ent, rate)
-   love.timer.sleep(1 / 300)
-   if ent.alpha > 0 then
-      if rate <= ent.alpha then
-	 ent.alpha = ent.alpha - rate
-      else
-	 ent.alpha = 0
-      end
-      return 0
-   else
-      return 1
-   end
-end
-
 -- Standard keymap
 -- The 'repeated' subtable holds keybindings that are continually executed when the key
 -- is held down. The 'norepeated' subtable holds keybindings that are only executed once
@@ -242,8 +218,6 @@ end
 local P = {			-- Our package table to export
    ctrlk = ctrlk,	-- Pub name = local name
    vcam = vcam,
-   screen = screen,
-   fade = fade,
    keycontrol = keycontrol,
    keymap = keymap,
 }

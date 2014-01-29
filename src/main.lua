@@ -61,15 +61,17 @@ hud.menuicon.y = hud.menuicon.height / 2
 
 function love.load ()
    love.keyboard.setKeyRepeat(true)
-
-
-   dragon:load_sprite("img/placeholder.png")
-   dragon.x = 300
-   dragon.y = 300
+   love.graphics.setDefaultFilter("linear", "linear")
 
    startmenu:load_sprite("img/cuneiform-start-screen.png")
    startmenu.x = 0
    startmenu.y = 0
+
+   love.graphics.setDefaultFilter("nearest", "nearest") -- Makes things sharper when zoomed in
+
+   dragon:load_sprite("img/placeholder.png")
+   dragon.x = 300
+   dragon.y = 300
 
    vcam.scale = (startmenu.width / love.window.getWidth())
    vcam.x = (startmenu.x - (startmenu.width / 2))
@@ -91,8 +93,6 @@ end
 function love.draw ()
 
    if state == "play" then
-      love.graphics.setDefaultFilter("nearest", "nearest") -- Makes things sharper when zoomed in
-
       vcam:apply()
       mapdraw(world.levels[1], tiles, 32, love.graphics.draw)
       love.graphics.printf(idprint, 0, 400, 800, "center")
@@ -103,8 +103,6 @@ function love.draw ()
       hud:methodcall("render")
       love.graphics.printf(bugprint, 50, 10, 800, "center")
    elseif state == "start" then
-      love.graphics.setDefaultFilter("linear", "linear")
-
       vcam:apply()
       startmenu:render()
       vcam:clear()

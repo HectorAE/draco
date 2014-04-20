@@ -6,6 +6,7 @@ require "scales_ui"
 require "scales_data"
 require "scales_mapper"
 require "scales_entity"
+require "scales_body"
 
 -- Globals
 world = scales_mapper.world
@@ -24,7 +25,7 @@ vcam = scales_ui.vcam:new()
 
 tiles = {}
 
-dragon = entity:new()
+dragon = scales_body.body:new()
 dragon = scales.gendragon(dragon)	-- Constructor for the table of attributes for the player's dragon
 dragon.name = "Neirada"
 
@@ -69,9 +70,33 @@ function love.load ()
 
    love.graphics.setDefaultFilter("nearest", "nearest") -- Makes things sharper when zoomed in
 
-   dragon:load_sprite("img/placeholder.png")
-   dragon.x = 300
+   dragon.x = 200
    dragon.y = 300
+
+   dragon.parts.head = entity:new()
+   dragon.parts.head:load_sprite("img/dragonhead.png")
+   dragon.parts.head.xoffset = 0
+   dragon.parts.head.yoffset = -60
+
+   dragon.parts.neck = entity:new()
+   dragon.parts.neck:load_sprite("img/dragonneck.png")
+   dragon.parts.neck.xoffset = 0
+   dragon.parts.neck.yoffset = -40
+
+   dragon.parts.torso = entity:new()
+   dragon.parts.torso:load_sprite("img/dragontorso.png")
+   dragon.parts.torso.xoffset = 0
+   dragon.parts.torso.yoffset = 0
+
+   dragon.parts.leftarm = entity:new()
+   dragon.parts.leftarm:load_sprite("img/dragonleg.png")
+   dragon.parts.leftarm.xoffset = -35
+   dragon.parts.leftarm.yoffset = -5
+
+   dragon.parts.rightarm = entity:new()
+   dragon.parts.rightarm:load_sprite("img/dragonleg.png")
+   dragon.parts.rightarm.xoffset = 35
+   dragon.parts.rightarm.yoffset = -5
 
    vcam.scale = (startmenu.width / love.window.getWidth())
    vcam.x = (startmenu.x - (startmenu.width / 2))

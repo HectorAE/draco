@@ -174,8 +174,8 @@ local keymap = {
       ["w"] = "vcam:adjpan(0, -10)",
       ["up"] = "dragon:forward(5)",
       ["down"] = "dragon:backward(5)",
-      ["right"] = "dragon.angle = dragon.angle + (math.pi / 20)",
-      ["left"] = "dragon.angle = dragon.angle - (math.pi / 20)",
+      ["right"] = "dragon:rotate(math.pi / 20)",
+      ["left"] = "dragon:rotate(-math.pi / 20)",
    },
    norepeated = {
       ["-"] = "vcam:zoom(1.25)",

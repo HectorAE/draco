@@ -50,13 +50,17 @@ entity.height = nil
 entity.alpha = 255
 
 function entity:forward (px)
-   self.y = self.y - (math.cos(self.angle) * 10)
-   self.x = self.x + (math.sin(self.angle) * 10)
+   self.y = self.y - (math.cos(self.angle) * px)
+   self.x = self.x + (math.sin(self.angle) * px)
 end
 
 function entity:backward (px)
-   self.y = self.y + (math.cos(self.angle) * 10)
-   self.x = self.x - (math.sin(self.angle) * 10)
+   self.y = self.y + (math.cos(self.angle) * px)
+   self.x = self.x - (math.sin(self.angle) * px)
+end
+
+function entity:rotate (d)
+   self.angle = self.angle + d
 end
 
 -- A clickable is an entity that can be clicked

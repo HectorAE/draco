@@ -7,7 +7,7 @@ dragon. In this world, there is little to nothing holding you back from
 doing whatever you want.
 
 This game is still in development. It is considered unstable and not
-yet ready for distribution. The current working LÖVE version is 0.9.0.
+yet ready for distribution. The current working LÖVE version is 0.9.1.
 
 Dependencies
 ------------
